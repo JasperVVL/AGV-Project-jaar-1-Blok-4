@@ -81,7 +81,7 @@ void sonar_voor(){
 
   duration_voor = pulseIn(echoPin_voor, HIGH);
   distance_voor = duration_voor*0.034/2;
-
+  Serial.print("Vandaag is moooi :-) ");
   Serial.print("Distance voor: ");
   Serial.println(distance_voor);
 }
