@@ -1,6 +1,8 @@
 #include <ZumoShield.h>
 #include <Wire.h>
 
+printf("jo");
+
 Pushbutton button(12);
 ZumoBuzzer buzzer;
 ZumoMotors motors;
