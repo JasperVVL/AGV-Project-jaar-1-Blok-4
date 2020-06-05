@@ -1,0 +1,100 @@
+#include <ZumoShield.h>
+#include <Wire.h>
+
+Pushbutton button(12);
+ZumoBuzzer buzzer;
+ZumoMotors motors;
+
+const int ledPin = 13;
+const int trigPin_voor = 2; //Zet pin 5 als trigPin.
+const int echoPin_voor = 5; //Zet pin 2 als echoPin.
+const int trigPin_achter = 4; //Zet pin 4 als trigPin.
+const int echoPin_achter = 11; //Zet pin 11 als echoPin.
+
+float distance_voor = 50;
+float duration_voor = 50;
+
+
+
+float distance_achter = 50;
+float duration_achter = 50;
+
+int motorSpeed_vooruit = 50;
+int motorSpeed_achteruit = -50;
+int motorOff = 0;
+
+void sonar_voor();
+void sonar_achter();
+
+void setup() {
+  pinMode(ledPin, OUTPUT);
+  pinMode(trigPin_voor, OUTPUT);  
+  pinMode(echoPin_voor, INPUT);
+  pinMode(trigPin_achter, OUTPUT);  
+  pinMode(echoPin_achter, INPUT);
+
+  digitalWrite(ledPin, LOW);
+
+  Serial.begin(9600);
+  }
+
+void loop() {
+sonar_voor();
+sonar_achter();
+
+
+  if((distance_voor < 20 && distance_voor > 5) && (distance_achter > 20 || distance_achter < 5)){
+    motors.setRightSpeed(motorSpeed_vooruit);
+    motors.setLeftSpeed(motorSpeed_vooruit);
+  }else{
+    if((distance_achter < 20 && distance_achter > 5) && (distance_voor > 20 || distance_voor < 5)){
+    motors.setRightSpeed(motorSpeed_achteruit);
+    motors.setLeftSpeed(motorSpeed_achteruit);
+      }else{
+        motors.setRightSpeed(motorOff);
+        motors.setLeftSpeed(motorOff);
+     }
+  }
+  /*if((distance_achter < 20 && distance_achter > 5) && (distance_voor > 20 || distance_voor < 5)){
+    motors.setRightSpeed(motorSpeed_achteruit);
+    motors.setLeftSpeed(motorSpeed_achteruit);
+  }
+  if((distance_achter < 20 && distance_achter > 5) && (distance_voor < 20 || distance_voor > 5)){
+    motors.setRightSpeed(motorOff);
+    motors.setLeftSpeed(motorOff);
+  }  
+  if((distance_achter > 20 && distance_achter < 5) && (distance_voor > 20 || distance_voor < 5)){
+    motors.setRightSpeed(motorOff);
+    motors.setLeftSpeed(motorOff);
+  }  */
+}
+
+void sonar_voor(){
+  digitalWrite(trigPin_voor, LOW);
+  delayMicroseconds(2);
+
+  digitalWrite(trigPin_voor, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(trigPin_voor, LOW);
+
+  duration_voor = pulseIn(echoPin_voor, HIGH);
+  distance_voor = duration_voor*0.034/2;
+
+  Serial.print("Distance voor: ");
+  Serial.println(distance_voor);
+}
+
+void sonar_achter(){
+  digitalWrite(trigPin_achter, LOW);
+  delayMicroseconds(2);
+
+  digitalWrite(trigPin_achter, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(trigPin_achter, LOW);
+
+  duration_achter = pulseIn(echoPin_achter, HIGH);
+  distance_achter = duration_achter*0.034/2;
+
+  Serial.print("Distance achter: ");
+  Serial.println(distance_achter);
+}
