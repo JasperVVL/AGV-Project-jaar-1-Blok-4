@@ -2,6 +2,7 @@
 #include <Wire.h>
 
 printf("jo");
+printf("Valerie was here");
 
 Pushbutton button(12);
 ZumoBuzzer buzzer;
