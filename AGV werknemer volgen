@@ -1,6 +1,7 @@
 #include <ZumoShield.h>
 #include <Wire.h>
 //maikwashere
+//testmetandereopslag
 //andreas ook
 Pushbutton button(12);
 ZumoBuzzer buzzer;
