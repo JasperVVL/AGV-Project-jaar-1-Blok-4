@@ -1,9 +1,7 @@
 #include <ZumoShield.h>
 #include <Wire.h>
 //maikwashere
-//andreasisnothereee
-//andreashetduurtlangggg
-
+//andreas ook
 Pushbutton button(12);
 ZumoBuzzer buzzer;
 ZumoMotors motors;
